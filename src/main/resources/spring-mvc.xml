@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+ http://www.springframework.org/schema/context 
+ http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+ http://www.springframework.org/schema/mvc 
+ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    <!-- 注解驱动 -->
+    <mvc:annotation-driven >
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- 扫描包 -->
+    <context:component-scan base-package="com.cfh.mmall" />
+    <!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->
+    <mvc:default-servlet-handler />
+    
+     <!-- 配置MultipartResolver 用于文件上传 使用spring的CommosMultipartResolver -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+      <!-- 限制上传文件大小为10MB -->
+      <property name="maxUploadSize" value="10485760"></property> 
+      <property name="defaultEncoding" value="UTF-8"></property> 
+      <property name="uploadTempDir" value="fileUpload/temp"></property>
+    </bean> 
+    
+    <!-- 配置拦截器
+    	 注意不要拦截静态资源 -->
+    <!-- 
+    <mvc:interceptors>
+      <mvc:interceptor>
+        <mvc:mapping path="/**"/>
+		<mvc:exclude-mapping path="/**/fonts/*"/>
+        <mvc:exclude-mapping path="/**/*.css"/>
+        <mvc:exclude-mapping path="/**/*.js"/>
+        <mvc:exclude-mapping path="/**/*.png"/>
+        <mvc:exclude-mapping path="/**/*.gif"/>
+        <mvc:exclude-mapping path="/**/*.jpg"/>
+        <mvc:exclude-mapping path="/**/*.jpeg"/>
+        <bean class="com.demo.interceptor.FirstInterceptor"></bean>
+      </mvc:interceptor>
+    </mvc:interceptors>-->
+    
+    	 <!-- 静态资源解析
+	  包括 ：js、css、img、..
+	 -->
+	 <mvc:resources location="/js/" mapping="/js/**"/>
+	 <mvc:resources location="/css/" mapping="/css/**"/>
+	 <mvc:resources location="/img/" mapping="/img/**"/>
+    
+    
+	<!-- 视图解析器
+	解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包
+	 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>
