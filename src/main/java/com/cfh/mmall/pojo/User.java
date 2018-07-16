@@ -2,6 +2,9 @@ package com.cfh.mmall.pojo;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class User {
     private Integer id;
 
@@ -39,10 +42,12 @@ public class User {
         this.username = username == null ? null : username.trim();
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
     }

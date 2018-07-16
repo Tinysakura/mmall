@@ -5,7 +5,7 @@ import java.util.Date;
 public class Category {
     private Integer id;
 
-    private Integer parentId;
+	private Integer parentId;
 
     private String name;
 
@@ -72,4 +72,22 @@ public class Category {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+    
+    @Override
+	public int hashCode() {
+    	return id !=null ? id.hashCode() : 0;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this){
+			return true;
+		}else if(obj == null || obj.getClass() != getClass()){
+			return false;
+		}
+		
+		Category category = (Category)obj;
+		
+        return !(id != null ? !id.equals(category.id) : category.id != null);
+	}
 }

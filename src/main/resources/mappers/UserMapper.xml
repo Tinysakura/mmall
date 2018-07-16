@@ -149,4 +149,43 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="userNameExsist" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select count(*) from mmall_user where username = #{userName}
+  </select>
+  
+   <select id="emailExsist" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select count(*) from mmall_user where email = #{email}
+  </select>
+  
+  <select id="selectByUserName" parameterType="String" resultType="com.cfh.mmall.pojo.User">
+      select
+      <include refid="Base_Column_List" />
+      from mmall_user
+      where username = #{userName}
+  </select>
+  
+  <select id="queryQuestion" parameterType="String" resultType="String">
+      select 
+      question
+      from mmall_user 
+      where username = #{userName}
+  </select>
+  
+  <select id="queryAnswer" parameterType="String" resultType="String">
+      select 
+      answer
+      from mmall_user 
+      where username = #{userName}
+  </select>
+  
+  <select id="modifyPassword" parameterType="String">
+      update 
+      mmall_user
+      set
+      password = #{npassword}
+      where 
+      username = #{username}
+  </select>
+  
 </mapper>

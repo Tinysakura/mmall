@@ -54,7 +54,7 @@
 	 <mvc:resources location="/js/" mapping="/js/**"/>
 	 <mvc:resources location="/css/" mapping="/css/**"/>
 	 <mvc:resources location="/img/" mapping="/img/**"/>
-    
+	 <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
     
 	<!-- 视图解析器
 	解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包
@@ -64,4 +64,9 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- 集成swagger2 -->
+	<!--  
+	<bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" id="swagger2Config"/>
+	-->
 </beans>
