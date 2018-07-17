@@ -20,6 +20,9 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
 	List<Product> selectList();
+	
+	//减少库存
+	void decreaseStock(@Param("productId") Integer productId,@Param("decreaseAmount") Integer decreaseAmounnt);
 
 	//根据关键字与分类id查询商品集
     List<Product> selectByNameAndCategoryIds(@Param("productName")String productName,@Param("categoryIdList")List<Integer> categoryIdList);

@@ -161,4 +161,14 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getByOrderNoUserId" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from mmall_order_item
+    where order_no = #{orderNo}
+    <if test="userId != null">
+      and user_id = #{userId}
+    </if>
+  </select>
 </mapper>

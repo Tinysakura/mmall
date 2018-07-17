@@ -39,7 +39,7 @@ public class UserController {
 	public ServerResponse<User> login(@RequestBody User user,HttpSession session){
 		ServerResponse<User> response = userService.loging(user.getUsername(), user.getPassword());
 		
-		if(response.getStatus() == 0){
+		if(response.getStatus() == ServerResponse.ResponseCode.SUCCESS){
 			session.setAttribute(Const.CURRENT_USER, response.getData());
 		}
 		

@@ -1,5 +1,7 @@
 package com.cfh.mmall.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.cfh.mmall.pojo.Order;
 
 public interface OrderMapper {
@@ -14,4 +16,8 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+    
+    Order selectByOrderIdUserId(@Param("userId") Integer userId,@Param ("orderNo") Long orderNo);
+
+	Order selectByOrderNo(Long orderNo);
 }

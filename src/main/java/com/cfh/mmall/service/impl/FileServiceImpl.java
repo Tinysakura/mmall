@@ -39,11 +39,8 @@ public class FileServiceImpl implements FileService{
         try {
             file.transferTo(targetFile);
             //文件已经上传成功了
-
-
             FTPUtil.uploadFile(Lists.newArrayList(targetFile));
             //已经上传到ftp服务器上
-
             targetFile.delete();
         } catch (IOException e) {
             logger.error("上传文件异常",e);

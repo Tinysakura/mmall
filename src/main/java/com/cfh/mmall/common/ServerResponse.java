@@ -78,7 +78,7 @@ public class ServerResponse<T>{
     //判断请求是否成功
     @JsonIgnore
     public boolean success(){
-    	return this.status == 0;
+    	return this.status == 1;
     }
     
     public T getData(){
