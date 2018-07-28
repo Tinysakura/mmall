@@ -1,7 +1,5 @@
 package com.cfh.mmall.service.impl;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
@@ -34,7 +34,6 @@ import com.cfh.mmall.dao.ProductMapper;
 import com.cfh.mmall.pojo.Order;
 import com.cfh.mmall.pojo.OrderItem;
 import com.cfh.mmall.pojo.PayInfo;
-import com.cfh.mmall.pojo.Product;
 import com.cfh.mmall.service.OrderService;
 import com.cfh.mmall.util.BigDecimalUtil;
 import com.cfh.mmall.util.DateTimeUtil;
@@ -159,7 +158,7 @@ public class OrderServiceImpl implements OrderService{
 	                String qrFileName = String.format("qr-%s.png",response.getOutTradeNo());
 	                //使用ZxingUtils根据response中的OrCode在指定路径下生成二维码图片
 	                ZxingUtils.getQRCodeImge(response.getQrCode(), 256, qrPath);
-	                //将图片上传到问津服务器
+	                //将图片上传到文件服务器
 	                File targetFile = new File(path,qrFileName);
 	                try {
 	                    FTPUtil.uploadFile(Lists.newArrayList(targetFile));
@@ -199,6 +198,7 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public ServerResponse aliCallback(Map<String, String> params) {
         Long orderNo = Long.parseLong(params.get("out_trade_no"));
@@ -238,18 +238,27 @@ public class OrderServiceImpl implements OrderService{
         return ServerResponse.createSuccessResponse("支付成功");
 	}
 
+    /**
+     * 查询订单的状态
+     */
 	@Override
 	public ServerResponse queryOrderPayStatus(Integer userId, Long orderNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * 统计购物车中所有被勾选的商品生产订单
+	 */
 	@Override
 	public ServerResponse createOrder(Integer userId, Integer shippingId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * 根据商品的状态取消或者拒绝取消订单
+	 */
 	@Override
 	public ServerResponse<String> cancel(Integer userId, Long orderNo) {
 		// TODO Auto-generated method stub
