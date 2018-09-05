@@ -8,13 +8,9 @@
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <!-- 开启自动扫描，将被@Component注解的bean加入到容器 -->
-    <context:component-scan base-package="com.mmall" annotation-config="true"/>
-
-    <!-- 使用注解式的aop -->
-    <aop:aspectj-autoproxy/>
-  
-    <import resource="applicationContext-datasource.xml"/>
-    
-    <import resource="applicationContext-netty.xml" />
+     
+     <!-- 配置netty服务端的启动类 -->
+     <bean id="TettyServerBootStrap" class="com.tetty.bootstrap.NettyServerBootstrap" init-method="serverStart">
+         <property name="port" value="8888"></property>
+     </bean>
 </beans>

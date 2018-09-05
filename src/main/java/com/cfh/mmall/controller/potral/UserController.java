@@ -29,8 +29,6 @@ public class UserController {
 	
 	/**
 	 * 用户登录的接口
-	 * @param userName
-	 * @param password
 	 * @param session
 	 * @return
 	 */
